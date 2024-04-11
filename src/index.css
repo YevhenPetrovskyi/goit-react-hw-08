@@ -1,0 +1,88 @@
+@import url('./fonts/fonts.css');
+
+:root {
+  font-family: 'Montserrat', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #242424;
+  background-color: rgba(255, 255, 255, 0.87);
+}
+
+/* Reset styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: currentColor;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.link {
+  text-decoration: none;
+}
+
+body.is-hidden {
+  overflow: hidden;
+}
+
+span {
+  z-index: 1;
+}
+
+:root {
+  /* Breakpoints */
+  --mobile: 360px;
+  --tablet: 768px;
+  --desktop: 1440px;
+}
+
+/* Container */
+.container {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 20px;
+
+  @media (360px<=width) {
+    max-width: var(--mobile);
+  }
+
+  @media (768px<=width) {
+    max-width: var(--tablet);
+    padding: 0 32px;
+  }
+
+  @media (1440px<=width) {
+    max-width: var(--desktop);
+    padding: 0 112px;
+  }
+}

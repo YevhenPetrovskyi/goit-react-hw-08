@@ -1,0 +1,19 @@
+.contact {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #232323;
+  border-radius: 5px;
+
+  li:first-child {
+    margin-bottom: 5px;
+  }
+
+  svg {
+    margin-right: 5px;
+  }
+}
