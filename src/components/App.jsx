@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { refresh } from '../redux/auth/operation';
+import { refresh } from '../redux/auth/operations';
 import { useAuth } from '../hooks';
 
 const Home = lazy(() => import('../pages/Home'));

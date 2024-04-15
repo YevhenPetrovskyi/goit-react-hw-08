@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 
 import normalizeName from '../../helpers/normalizeName';
 import { ContactSchema } from '../../helpers/schemes';
-import { addContact } from '../../redux/contacts/operation';
+import { addContact } from '../../redux/contacts/operations';
 import { Box, TextField } from '@mui/material';
 import Button from '@mui/material/Button';
 import toast from 'react-hot-toast';

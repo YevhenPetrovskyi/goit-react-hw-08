@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register, logIn, refresh, logOut } from './operation';
+import { register, logIn, refresh, logOut } from './operations';
 
 const INTIAL_STATE = {
   user: {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../hooks';
-import { logOut } from '../../redux/auth/operation';
+import { logOut } from '../../redux/auth/operations';
 import stringAvatar from '../../helpers/userLogo';
 import sliceText from '../../helpers/sliceText';
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { UserRegisterSchema } from '../../helpers/schemes';
-import { register } from '../../redux/auth/operation';
+import { register } from '../../redux/auth/operations';
 import { toast } from 'react-hot-toast';
 import normalizeName from '../../helpers/normalizeName';
 import { Box, Button, TextField } from '@mui/material';
