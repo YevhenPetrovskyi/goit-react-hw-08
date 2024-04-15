@@ -12,6 +12,7 @@ const Layout = ({ children }) => {
   const preferMode = useSelector(selectTheme);
   const preferDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const mode = preferMode !== null ? preferMode : preferDarkMode;
+  console.log(mode);
 
   const appTheme = useMemo(() => {
     return createTheme({

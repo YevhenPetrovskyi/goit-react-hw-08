@@ -4,6 +4,7 @@ import { selectTheme } from '../../redux/theme/selectors';
 import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import { FormControlLabel } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -54,7 +55,9 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 const ThemeSwitchButton = () => {
   const dispatch = useDispatch();
-  const mode = useSelector(selectTheme);
+  const preferMode = useSelector(selectTheme);
+  const preferDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  const mode = preferMode !== null ? preferMode : preferDarkMode;
 
   const handleChange = (event) => {
     dispatch(changeTheme(event.target.checked));
