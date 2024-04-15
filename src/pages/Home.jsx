@@ -4,7 +4,7 @@ import { useAuth } from '../hooks';
 import { NavLink } from 'react-router-dom';
 
 const Home = () => {
-  const { isLoggedIn, user } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   return (
     <Container maxWidth="lg">
