@@ -1,8 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './operation';
+import { logOut } from '../auth/operation';
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  editContact,
+} from './operation';
 
 const INITIAL_STATE = {
-  items: [],
+  items: null,
   isLoading: false,
   error: null,
 };
@@ -21,6 +27,7 @@ const contactsSlice = createSlice({
   initialState: INITIAL_STATE,
   extraReducers: (builder) => {
     builder
+      // fetchContacts
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -29,6 +36,7 @@ const contactsSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(fetchContacts.rejected, handleRejected)
+      // addContact
       .addCase(addContact.pending, handlePending)
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -36,6 +44,7 @@ const contactsSlice = createSlice({
         state.items.push(action.payload);
       })
       .addCase(addContact.rejected, handleRejected)
+      // deleteContact
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -44,7 +53,21 @@ const contactsSlice = createSlice({
           (contact) => contact.id !== action.payload.id
         );
       })
-      .addCase(deleteContact.rejected, handleRejected);
+      .addCase(deleteContact.rejected, handleRejected)
+      //editContact
+      .addCase(editContact.pending, handlePending)
+      .addCase(editContact.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = state.items.map((contact) => {
+          if (contact.id === action.payload.id) {
+            return action.payload;
+          }
+          return contact;
+        });
+      })
+      .addCase(editContact.rejected, handleRejected)
+      .addCase(logOut.fulfilled, () => INITIAL_STATE);
   },
 });
 

@@ -1,15 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { useId } from 'react';
-import iziToast from 'izitoast';
+import { useDispatch } from 'react-redux';
+import { useFormik } from 'formik';
 
-import normalizeName from '../../helpers/nameNormalize';
+import normalizeName from '../../helpers/normalizeName';
 import { ContactSchema } from '../../helpers/schemes';
 import { addContact } from '../../redux/contacts/operation';
-import { selectContacts } from '../../redux/contacts/selectors';
-
-import 'izitoast/dist/css/iziToast.min.css';
-import styles from './ContactForm.module.css';
+import { Box, TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   name: '',
@@ -18,57 +15,54 @@ const initialValues = {
 
 function ContactForm() {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
 
-  const nameFieldId = useId();
-  const numberFieldId = useId();
-
-  const submitHandler = ({ name, number }, { resetForm }) => {
+  const handleSubmit = ({ name, number }) => {
     const correctName = normalizeName(name);
-
-    if (contacts.some((contact) => contact.name === correctName)) {
-      iziToast.error({
-        title: 'Error',
-        message: `${correctName} is already in contact!`,
-        position: 'topRight',
-      });
-      return;
-    }
-
     dispatch(addContact({ name: correctName, number }));
-    resetForm();
+    formik.resetForm();
+    toast.success('Contact added');
   };
 
+  const formik = useFormik({
+    initialValues,
+    onSubmit: handleSubmit,
+    validationSchema: ContactSchema,
+  });
+
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={submitHandler}
-      validationSchema={ContactSchema}
-    >
-      <Form className={styles.form}>
-        <div className={styles.inputContainer}>
-          <label htmlFor={nameFieldId}>Name</label>
-          <Field type="text" name="name" id={nameFieldId} />
-          <ErrorMessage
-            className={styles.errorMessage}
-            name="name"
-            component="span"
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <label htmlFor={numberFieldId}>Number</label>
-          <Field type="tel" name="number" id={numberFieldId} />
-          <ErrorMessage
-            className={styles.errorMessage}
-            name="number"
-            component="span"
-          />
-        </div>
-
-        <button type="submit">Add contact</button>
-      </Form>
-    </Formik>
+    <Box sx={{ mt: 2, mb: 4 }}>
+      <form onSubmit={formik.handleSubmit}>
+        <TextField
+          fullWidth
+          id="name"
+          label="Name"
+          name="name"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
+          onBlur={formik.handleBlur}
+          variant="outlined"
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          fullWidth
+          id="number"
+          label="Number"
+          name="number"
+          value={formik.values.number}
+          onChange={formik.handleChange}
+          error={formik.touched.number && Boolean(formik.errors.number)}
+          helperText={formik.touched.number && formik.errors.number}
+          onBlur={formik.handleBlur}
+          variant="outlined"
+          sx={{ mb: 2 }}
+        />
+        <Button type="submit" variant="contained" fullWidth>
+          Add contact
+        </Button>
+      </form>
+    </Box>
   );
 }
 

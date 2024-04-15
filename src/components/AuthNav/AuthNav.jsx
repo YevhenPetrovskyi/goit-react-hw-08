@@ -1,22 +1,28 @@
 import { NavLink } from 'react-router-dom';
-import clsx from 'clsx';
-import css from './AuthNav.module.css';
-
-const getNavLinkClassNames = ({ isActive }) =>
-  clsx(css.headerLink, {
-    [css.active]: isActive,
-  });
+import { Link, Box } from '@mui/material';
 
 const AuthNav = () => {
   return (
-    <div>
-      <NavLink className={getNavLinkClassNames} to="/register">
+    <Box sx={{ display: 'flex', gap: 2 }}>
+      <Link
+        component={NavLink}
+        to="/register"
+        color="inherit"
+        underline="none"
+        variant="h6"
+      >
         Register
-      </NavLink>
-      <NavLink className={getNavLinkClassNames} to="/login">
+      </Link>
+      <Link
+        component={NavLink}
+        to="/login"
+        color="inherit"
+        underline="none"
+        variant="h6"
+      >
         Login
-      </NavLink>
-    </div>
+      </Link>
+    </Box>
   );
 };
 

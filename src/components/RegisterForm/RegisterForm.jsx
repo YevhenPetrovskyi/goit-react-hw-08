@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useFormik } from 'formik';
 import { UserRegisterSchema } from '../../helpers/schemes';
-import { apiRegisterUser } from '../../redux/auth/operation';
+import { register } from '../../redux/auth/operation';
 import { toast } from 'react-hot-toast';
-
-import css from './RegisterForm.module.css';
+import normalizeName from '../../helpers/normalizeName';
+import { Box, Button, TextField } from '@mui/material';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const INITIAL_FORM_DATA = {
   name: '',
@@ -14,9 +17,11 @@ const INITIAL_FORM_DATA = {
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (values, { resetForm }) => {
-    dispatch(apiRegisterUser(values))
+  const handleSubmit = ({ name, email, password }, { resetForm }) => {
+    const normalizedName = normalizeName(name);
+    dispatch(register({ name: normalizedName, email, password }))
       .unwrap()
       .then(() => {
         toast.success('Welcome!');
@@ -30,62 +35,73 @@ const RegisterForm = () => {
         }
       });
   };
-  return (
-    <Formik
-      validationSchema={UserRegisterSchema}
-      initialValues={INITIAL_FORM_DATA}
-      onSubmit={handleSubmit}
-    >
-      <Form className={css.form}>
-        <label className={css.label}>
-          <span className={css.labelText}>User name:</span>
-          <Field
-            className={css.formInput}
-            placeholder="Alex Mihalich"
-            type="text"
-            name="name"
-          />
-          <ErrorMessage className={css.errorMsg} name="name" component="span" />
-        </label>
-        <label className={css.label}>
-          <span className={css.labelText}>Email:</span>
-          <Field
-            className={css.formInput}
-            placeholder="alex@patron.com"
-            type="text"
-            name="email"
-          />
-          <ErrorMessage
-            className={css.errorMsg}
-            name="email"
-            component="span"
-          />
-        </label>
-        <label className={css.label}>
-          <span className={css.labelText}>Password:</span>
-          <Field
-            className={css.formInput}
-            placeholder="Enter your password"
-            type="password"
-            name="password"
-          />
-          <ErrorMessage
-            className={css.errorMsg}
-            name="password"
-            component="span"
-          />
-        </label>
 
-        <button
-          className={css.submitBtn}
-          type="submit"
-          title="Click to register user"
-          aria-label="Add new mailbox"
-        >
-          Sign Up
-        </button>
-      </Form>
-    </Formik>
+  const formik = useFormik({
+    initialValues: INITIAL_FORM_DATA,
+    onSubmit: handleSubmit,
+    validationSchema: UserRegisterSchema,
+  });
+
+  return (
+    <Box sx={{ maxWidth: '400px', mx: 'auto', mt: 5 }}>
+      <form onSubmit={formik.handleSubmit}>
+        <TextField
+          fullWidth
+          id="name"
+          label="Name"
+          name="name"
+          type="text"
+          value={formik.values.name}
+          onChange={formik.handleChange}
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={formik.touched.name && formik.errors.name}
+          onBlur={formik.handleBlur}
+          variant="outlined"
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          fullWidth
+          id="email"
+          label="Email"
+          name="email"
+          type="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          onBlur={formik.handleBlur}
+          variant="outlined"
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          fullWidth
+          id="password"
+          label="Password"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+          onBlur={formik.handleBlur}
+          variant="outlined"
+          sx={{ mb: 2 }}
+          InputProps={{
+            endAdornment: (
+              <Button
+                onClick={() => setShowPassword((prevState) => !prevState)}
+                variant="text"
+              >
+                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </Button>
+            ),
+          }}
+        />
+        <Button type="submit" variant="contained" fullWidth>
+          Register
+        </Button>
+      </form>
+    </Box>
   );
 };
 

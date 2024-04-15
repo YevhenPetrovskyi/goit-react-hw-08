@@ -4,9 +4,6 @@
   font-family: 'Montserrat', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color: #242424;
-  background-color: rgba(255, 255, 255, 0.87);
 }
 
 /* Reset styles */
@@ -57,32 +54,4 @@ body.is-hidden {
 
 span {
   z-index: 1;
-}
-
-:root {
-  /* Breakpoints */
-  --mobile: 360px;
-  --tablet: 768px;
-  --desktop: 1440px;
-}
-
-/* Container */
-.container {
-  margin: 0 auto;
-  width: 100%;
-  padding: 0 20px;
-
-  @media (360px<=width) {
-    max-width: var(--mobile);
-  }
-
-  @media (768px<=width) {
-    max-width: var(--tablet);
-    padding: 0 32px;
-  }
-
-  @media (1440px<=width) {
-    max-width: var(--desktop);
-    padding: 0 112px;
-  }
 }

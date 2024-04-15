@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { apiRefreshUser } from '../redux/auth/operation';
+import { refresh } from '../redux/auth/operation';
 import { useAuth } from '../hooks';
 
 const Home = lazy(() => import('../pages/Home'));
@@ -14,14 +14,12 @@ import Loader from './Loader/Loader';
 import RestrictedRoute from './RestrictedRoute';
 import PrivateRoute from './PrivateRoute';
 
-import './App.css';
-
 function App() {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(apiRefreshUser());
+    dispatch(refresh());
   }, [dispatch]);
 
   return isRefreshing ? (

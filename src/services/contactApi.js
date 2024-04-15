@@ -56,3 +56,9 @@ export const requestDeleteContact = async (contactId) => {
 
   return data;
 };
+
+export const requestEditContact = async (contactId, contact) => {
+  const { data } = await instanse.patch(`/contacts/${contactId}`, contact);
+
+  return data;
+};

@@ -1,0 +1,15 @@
+.userMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  font-size: 18px;
+  font-weight: 600;
+  display: none;
+  @media (768px<=width) {
+    display: block;
+  }
+}

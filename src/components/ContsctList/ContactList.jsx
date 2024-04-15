@@ -2,25 +2,28 @@ import { useSelector } from 'react-redux';
 import { selectFilteredContacts } from '../../redux/filters/selectors';
 
 import Contact from './Contact';
-
-import css from './ContactList.module.css';
+import { List } from '@mui/material';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function ContactList() {
-  const visibleContacts = useSelector(selectFilteredContacts);
-  console.log('visibleContacts: ', visibleContacts);
+  const contacts = useSelector(selectFilteredContacts);
 
-  return (
-    <>
-      {visibleContacts.length > 0 ? (
-        <ul className={css.contactList}>
-          {visibleContacts.map((contact) => (
-            <Contact key={contact.id} {...contact} />
-          ))}
-        </ul>
-      ) : (
-        <p className={css.textInfo}>Your phonebook is empty!</p>
-      )}
-    </>
+  return Array.isArray(contacts) && contacts.length > 0 ? (
+    <List
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-around',
+        flexWrap: 'wrap',
+        gap: '12px',
+        mt: 2,
+      }}
+    >
+      {contacts.map((contact) => (
+        <Contact key={contact.id} {...contact} />
+      ))}
+    </List>
+  ) : (
+    <ErrorMessage message={'No such contacts found'} />
   );
 }
 

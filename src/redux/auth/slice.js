@@ -1,10 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  apiRegisterUser,
-  apiLoginUser,
-  apiRefreshUser,
-  apiLogOutUser,
-} from './operation';
+import { register, logIn, refresh, logOut } from './operation';
 
 const INTIAL_STATE = {
   user: {
@@ -23,35 +18,31 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       //Register
-      .addCase(apiRegisterUser.fulfilled, (state, action) => {
+      .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
       //Login
-      .addCase(apiLoginUser.fulfilled, (state, action) => {
+      .addCase(logIn.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
       })
       //Refresh
-      .addCase(apiRefreshUser.pending, (state) => {
+      .addCase(refresh.pending, (state) => {
         state.isRefreshing = true;
       })
-      .addCase(apiRefreshUser.fulfilled, (state, action) => {
+      .addCase(refresh.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addCase(apiRefreshUser.rejected, (state) => {
+      .addCase(refresh.rejected, (state) => {
         state.isRefreshing = false;
       })
       //Logout
-      .addCase(apiLogOutUser.fulfilled, (state) => {
-        state.user = { name: null, email: null };
-        state.token = null;
-        state.isLoggedIn = false;
-      });
+      .addCase(logOut.fulfilled, () => INTIAL_STATE);
     // .addCase(apiLogOutUser.rejected, (state) => {
     //   state.user = { name: null, email: null };
     //   state.token = null;

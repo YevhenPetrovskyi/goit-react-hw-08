@@ -1,12 +1,9 @@
-import { useId } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectNameFilter } from '../../redux/filters/selectors';
 import { changeFilter } from '../../redux/filters/slice';
-
-import css from './SearchBox.module.css';
+import { Box, TextField } from '@mui/material';
 
 function SearchBox() {
-  const contactFilterId = useId();
   const dispatch = useDispatch();
   const filter = useSelector(selectNameFilter);
 
@@ -15,17 +12,18 @@ function SearchBox() {
   };
 
   return (
-    <div className={css.searchBox}>
-      <label htmlFor={contactFilterId}>Find contacts by name and number</label>
-      <input
-        placeholder="Search contact"
+    <Box>
+      <TextField
+        fullWidth
+        id="filter"
+        label="Find contacts by name or number"
+        name="filter"
         value={filter}
         onChange={onChangeInputHandler}
-        type="text"
-        name="contactFilter"
-        id={contactFilterId}
+        variant="outlined"
+        sx={{ mb: 2 }}
       />
-    </div>
+    </Box>
   );
 }
 
