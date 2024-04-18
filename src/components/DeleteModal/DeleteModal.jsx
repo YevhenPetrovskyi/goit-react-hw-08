@@ -14,7 +14,7 @@ const DeleteModal = ({ open, handleClose, handleDelete }) => {
     >
       <DialogContent>
         <DialogTitle id="alert-dialog-title">
-          {'Are you sure you want to delete this contact?'}
+          Are you sure you want to delete this contact?
         </DialogTitle>
       </DialogContent>
       <DialogActions>

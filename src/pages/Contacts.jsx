@@ -33,7 +33,7 @@ const Contacts = () => {
             (contacts.length > 0 ? (
               <ContactList />
             ) : (
-              <ErrorMessage message={'Contact list is empty'} />
+              <ErrorMessage message={'The contact list is currently empty'} />
             ))}
           {isLoading && <SectionLoader />}
         </Grid>

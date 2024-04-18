@@ -23,7 +23,9 @@ function ContactList() {
       ))}
     </List>
   ) : (
-    <ErrorMessage message={'No such contacts found'} />
+    <ErrorMessage
+      message={"We couldn't find any contacts matching your search criteria"}
+    />
   );
 }
 
