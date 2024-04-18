@@ -50,7 +50,6 @@ function ContactForm() {
           id="number"
           label="Number"
           name="number"
-          type="number"
           value={formik.values.number}
           onChange={formik.handleChange}
           error={formik.touched.number && Boolean(formik.errors.number)}
